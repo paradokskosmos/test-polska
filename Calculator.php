@@ -5,7 +5,6 @@ class Calculator
     protected $list_Of_Numbers;
     protected $list_Of_Arifmetic_Signs;
     protected $answer;
-    private $string;
     private $operations;
 
 
@@ -14,16 +13,15 @@ class Calculator
         $this->list_Of_Numbers = array();
         $this->list_Of_Arifmetic_Signs = array();
         $this->answer = NULL;
-        $this->string = NULL;
         $this->operations = array('*' => 'multiply', '/' => 'divide', '+' => 'plus', '-' => 'minus');
     }
      
 
-    public function getStr($str = NULL)
+    protected function setStr($str = NULL)
     {
-        if(isset($str) && is_string($str) && preg_match('#\d#', $str))
+        if(isset($str) && is_string($str) && preg_match('#^\d+|\W+$#', $str))
         {
-            $this->string = $str;
+            return $str;
                  
         } else
         {
@@ -31,9 +29,9 @@ class Calculator
         }
     }
     
-    public function getAnswer()
+    public function getAnswer($str)
     {
-        $this->parser(explode(' ', $this->string));
+        $this->parser(explode(' ', $this->setStr($str)));
         $this->toCompute();
         
         return $this->answer;
@@ -48,8 +46,8 @@ class Calculator
     
     protected function parser(array $array_Of_Signs_and_Numbers)
     {
-        $this->list_Of_Arifmetic_Signs = $this->getSigns($array_Of_Signs_and_Numbers);
         $this->list_Of_Numbers = $this->getNumbers($array_Of_Signs_and_Numbers);
+        $this->list_Of_Arifmetic_Signs = $this->getSigns($array_Of_Signs_and_Numbers);
     }
     
     private function getSigns(array $arr_Signs)
@@ -108,6 +106,13 @@ class Calculator
     
     private function divide($counter)
     {
-        $this->answer /= $this->list_Of_Numbers[$counter];
+        if(is_numeric($this->list_Of_Numbers[$counter]) && !(0 == $this->list_Of_Numbers[$counter]))
+        {
+            $this->answer /= $this->list_Of_Numbers[$counter];
+        }
+        else
+        {
+            throw new Exception('dividition on null');
+        }
     }
 }

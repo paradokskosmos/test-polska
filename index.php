@@ -11,18 +11,15 @@
  include 'Calculator.php';
  include 'AdditionalCalculator.php';
  
-$expression = &$_GET['track'];
-//var_dump($expression);
+$expression = $_GET['track'];
 if(isset($expression))
 {
     $calculator = new AdditionalCalculator();
 
-//    $calculator->testFunc($expression);
     try
     {
 
-      $calculator->getStr($expression);
-      echo "answer is " . $calculator->getAnswer();
+        echo "answer is " . $calculator->getAnswer($expression);
       
       
     } catch (Exception $exp)
@@ -30,7 +27,3 @@ if(isset($expression))
         echo "please enter right string, for example '15 16 *'";
     }
 }
-
-//$string = new SplString("Testing");
-//
-//var_dump($string);
