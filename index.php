@@ -1,45 +1,36 @@
+<p>
+<form action="">
+<p>input the expression</p>
+<input type="text" required="" name="track">
+<input type="submit" value="Submit">
+</form>
+</p>
+
 <?php
  
+ include 'Calculator.php';
+ include 'AdditionalCalculator.php';
  
-/**
- * Определение MyClass
- */
-class MyClass
+$expression = &$_GET['track'];
+//var_dump($expression);
+if(isset($expression))
 {
-    public $public = 'Общий';
-    protected $protected = 'Защищенный';
-    private $private = 'Закрытый';
+    $calculator = new AdditionalCalculator();
 
-    function printHello()
+//    $calculator->testFunc($expression);
+    try
     {
-        echo $this->public;
-        echo $this->protected;
-        echo $this->private;
+
+      $calculator->getStr($expression);
+      echo "answer is " . $calculator->getAnswer();
+      
+      
+    } catch (Exception $exp)
+    {
+        echo "please enter right string, for example '15 16 *'";
     }
 }
 
- 
-
-/**
- * Определение MyClass2
- */
-class MyClass2 extends MyClass
-{
-    // Мы можем переопределить public и protected методы, но не private
-  protected $protected = 'Защищенный2';
-
-    function printHello()
-    {
-        //echo $this->public;
-        //echo $this->protected;
-        echo $this->private;
-    }
-}
+//$string = new SplString("Testing");
 //
-// $obj2 = new MyClass2();
-////echo $obj2->public; // Работает
-////echo $obj2->protected; // Неисправимая ошибка
-////echo $obj2->private; // Неопределен
-// $obj2->printHello(); // Выводит Общий, Защищенный2 и Неопределен
-
-?>
+//var_dump($string);

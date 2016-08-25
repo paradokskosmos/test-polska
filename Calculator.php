@@ -1,8 +1,113 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+class Calculator
+{
+    protected $list_Of_Numbers;
+    protected $list_Of_Arifmetic_Signs;
+    protected $answer;
+    private $string;
+    private $operations;
 
+
+    public function __construct()
+    { 
+        $this->list_Of_Numbers = array();
+        $this->list_Of_Arifmetic_Signs = array();
+        $this->answer = NULL;
+        $this->string = NULL;
+        $this->operations = array('*' => 'multiply', '/' => 'divide', '+' => 'plus', '-' => 'minus');
+    }
+     
+
+    public function getStr($str = NULL)
+    {
+        if(isset($str) && is_string($str) && preg_match('#\d#', $str))
+        {
+            $this->string = $str;
+                 
+        } else
+        {
+            throw new Exception("bad argument, it must be right string");
+        }
+    }
+    
+    public function getAnswer()
+    {
+        $this->parser(explode(' ', $this->string));
+        $this->toCompute();
+        
+        return $this->answer;
+    }
+    
+    
+    protected function setOperation(array $operation)
+    {
+        $key = key($operation);
+        $this->operations[$key] = $operation[$key];
+    }
+    
+    protected function parser(array $array_Of_Signs_and_Numbers)
+    {
+        $this->list_Of_Arifmetic_Signs = $this->getSigns($array_Of_Signs_and_Numbers);
+        $this->list_Of_Numbers = $this->getNumbers($array_Of_Signs_and_Numbers);
+    }
+    
+    private function getSigns(array $arr_Signs)
+    {
+        $array_Of_Signs = array();
+        foreach ($arr_Signs as $value) 
+        {
+            if(preg_match('#^(\W)$#', $value))
+            {
+                $array_Of_Signs[]= $value;
+            }
+        }
+
+        return $array_Of_Signs;
+    }
+    
+    private function getNumbers(array $arr_Numbers)
+    {
+        $array_Of_Numbers = array();
+        foreach ($arr_Numbers as $value) 
+        {
+         if (preg_match('#^(-[0-9]+|[0-9]+)$#', $value) ) 
+         {
+             $array_Of_Numbers[]= $value;
+         }
+        }
+        
+        return $array_Of_Numbers;
+    }
+    
+    private function toCompute()
+    {
+        $counter = 0;
+        $this->answer = $this->list_Of_Numbers[$counter];
+        
+        foreach($this->list_Of_Arifmetic_Signs as $key => $value)
+        {
+            $this->{$this->operations[$this->list_Of_Arifmetic_Signs[$key]]}(++$counter);
+        }
+    }
+    
+    private function plus($counter)
+    {
+        $this->answer += $this->list_Of_Numbers[$counter];
+    }
+    
+    private function minus($counter)
+    {
+        $this->answer -= $this->list_Of_Numbers[$counter];
+    }
+    
+    private function multiply($counter)
+    {
+        $this->answer *= $this->list_Of_Numbers[$counter];
+    }
+    
+    private function divide($counter)
+    {
+        $this->answer /= $this->list_Of_Numbers[$counter];
+    }
+}
