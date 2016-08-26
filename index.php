@@ -32,4 +32,4 @@ if(isset($expression))
 ?>
 <br>
 
-select count(userid), username from (SELECT userid, username  FROM users AS a WHERE a.userid <= 141414  and  a.username='Геральт' group by a.userid) as tmp;
+select count(userid) as number_of_string, username, count(userid) / 10 as page from (SELECT userid, username  FROM users AS a WHERE a.userid <= 141414  and  a.username='Геральт' group by a.userid) as tmp;
