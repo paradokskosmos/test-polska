@@ -6,6 +6,8 @@
 </form>
 </p>
 
+
+
 <?php
  
  include 'Calculator.php';
@@ -27,3 +29,7 @@ if(isset($expression))
         echo "please enter right string, for example '15 16 *'";
     }
 }
+?>
+<br>
+
+select count(userid), username from (SELECT userid, username  FROM users AS a WHERE a.userid <= 141414  and  a.username='Геральт' group by a.userid) as tmp;
