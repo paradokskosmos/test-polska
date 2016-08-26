@@ -12,10 +12,11 @@
  
  include 'Calculator.php';
  include 'AdditionalCalculator.php';
- 
-$expression = $_GET['track'];
-if(isset($expression))
+
+if(isset($_GET['track'])) 
 {
+    $expression = $_GET['track'];
+
     $calculator = new AdditionalCalculator();
 
     try
