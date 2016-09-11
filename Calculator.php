@@ -52,16 +52,23 @@ class Calculator
     
     private function getSigns(array $arr_Signs)
     {
-        $array_Of_Signs = array();
+        $Signs = array();
         foreach ($arr_Signs as $value) 
         {
             if(preg_match('#^(\W)$#', $value))
             {
-                $array_Of_Signs[]= $value;
+                $Signs[]= $value;
             }
         }
+        
 
-        return $array_Of_Signs;
+        if(array_key_exists($Signs[0], $this->operations))
+        {
+            return array($Signs[0]);
+        } else
+        {
+            throw new Exception("There isn't this sign in list of arguments");
+        }
     }
     
     private function getNumbers(array $arr_Numbers)

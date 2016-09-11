@@ -13,6 +13,7 @@
  include 'Calculator.php';
  include 'AdditionalCalculator.php';
 
+ 
 if(isset($_GET['track'])) 
 {
     $expression = $_GET['track'];
@@ -30,7 +31,7 @@ if(isset($_GET['track']))
         echo "please enter right string, for example '15 16 *'";
     }
 }
+//select count(userid) as number_of_string, username, count(userid) / 10 as page from (SELECT userid, username  FROM users AS a WHERE a.userid <= 141414  and  a.username='Геральт' group by a.userid) as tmp;
 ?>
 <br>
 
-select count(userid) as number_of_string, username, count(userid) / 10 as page from (SELECT userid, username  FROM users AS a WHERE a.userid <= 141414  and  a.username='Геральт' group by a.userid) as tmp;
